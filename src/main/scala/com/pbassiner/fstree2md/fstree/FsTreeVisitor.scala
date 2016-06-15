@@ -1,18 +1,33 @@
-package com.pbassiner.fstree2md.visitor
+package com.pbassiner.fstree2md.fstree
 
-import ammonite.ops.{ Path, ls }
+import ammonite.ops._
+import com.pbassiner.fstree2md.model.FsTree
 
 /**
  * Created by pbassiner on 15/06/16.
  */
-trait Visitor {
+trait FsTreeVisitor {
 
-  def visit(path: Path): Unit
+  def visit(path: Path): FsTree
 }
 
-class VisitorImpl extends Visitor {
+class FsTreeVisitorImpl extends FsTreeVisitor {
 
-  def visit(path: Path): Unit = writeToc(path, 0)
+  override def visit(path: Path): FsTree = {
+    visitRec(path, 0)
+  }
+
+  private[this] def visitRec(path: Path, depth: Int): FsTree = {
+    val listed = ls ! path
+    FsTree(path, listed.filter(interesting(_)).sortBy(_.isDir).map(_ match {
+      case currentPath if currentPath.isDir => {
+        visitRec(currentPath, depth + 1)
+      }
+      case currentPath if currentPath.isFile => FsTree(currentPath, Seq.empty[FsTree])
+    }))
+  }
+
+  //writeToc(path, 0)
 
   def writeToc(path: Path, depth: Int): Unit = {
     val listed = ls ! path
