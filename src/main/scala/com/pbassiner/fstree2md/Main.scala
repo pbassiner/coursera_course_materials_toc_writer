@@ -10,12 +10,14 @@ import com.pbassiner.fstree2md.writer.MarkdownWriter
  */
 object Main {
   def main(args: Array[String]): Unit = new FsTreeVisitorImpl with MarkdownWriter {
-    assert(args.size > 0, "Need to specify the root directory")
+    assert(args.size > 2, "Usage: sbt \"run {rootDirectory} {targetMdFileRelativeToRootDir} {pathsToIgnore}\"")
 
     val wd: Path = Path(args(0))
-    override val mdFile: Path = wd / "README.md"
+    override val mdFile: Path = wd / args(1)
 
-    val fsTree: FsTree = visit(wd)
+    val ignoredPaths = args(2).split(",").toSet
+
+    val fsTree: FsTree = visit(wd, ignoredPaths)
     write(fsTree)
   }
 

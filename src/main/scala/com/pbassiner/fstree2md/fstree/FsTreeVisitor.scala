@@ -8,29 +8,29 @@ import com.pbassiner.fstree2md.model.FsTree
  */
 trait FsTreeVisitor {
 
-  def visit(path: Path): FsTree
+  def visit(path: Path, ignored: Set[String]): FsTree
 }
 
 trait FsTreeVisitorImpl extends FsTreeVisitor {
 
-  override def visit(path: Path): FsTree = {
-    visitRec(path, 0)
+  override def visit(path: Path, ignored: Set[String]): FsTree = {
+    visitRec(path, ignored, 0)
   }
 
-  private[this] def visitRec(path: Path, depth: Int): FsTree = {
+  private[this] def visitRec(path: Path, ignored: Set[String], depth: Int): FsTree = {
     val listed = ls ! path
-    FsTree(path, listed.filter(interesting(_)).sortBy(_.isDir).map(_ match {
+    FsTree(path, listed.filter(interesting(_, ignored)).sortBy(_.isDir).map(_ match {
       case currentPath if currentPath.isDir => {
-        visitRec(currentPath, depth + 1)
+        visitRec(currentPath, ignored: Set[String], depth + 1)
       }
       case currentPath if currentPath.isFile => FsTree(currentPath, Seq.empty[FsTree])
     }))
   }
 
-  def interesting(p: Path): Boolean = !isHidden(p) && !isAssignmentFiles(p)
+  private[this] def interesting(p: Path, ignored: Set[String]): Boolean = !isHidden(p) && !isIgnored(p, ignored)
 
-  def isHidden(p: Path): Boolean = p.last.startsWith(".")
+  private[this] def isHidden(p: Path): Boolean = p.last.startsWith(".")
 
-  def isAssignmentFiles(p: Path): Boolean = p.segments.contains("assignment_files")
+  private[this] def isIgnored(p: Path, ignored: Set[String]): Boolean = !p.segments.toSet.intersect(ignored).isEmpty
 
 }

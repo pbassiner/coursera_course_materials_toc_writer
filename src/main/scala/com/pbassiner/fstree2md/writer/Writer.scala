@@ -12,39 +12,6 @@ trait Writer {
   def write(fsTree: FsTree): Unit
 }
 
-trait StdOutWriter extends Writer {
-
-  override def write(fsTree: FsTree): Unit = {
-    write(fsTree, 0)
-  }
-
-  private[this] def write(fsTree: FsTree, depth: Int): Unit = {
-    fsTree.children.foreach(_ match {
-      case FsTree(p, c) if p.isDir => {
-        writeDirName(p, depth)
-        val files = listFiles(p)
-        writeFiles(files, depth + 1)
-        write(FsTree(p, c), depth + 1)
-      }
-      case _ =>
-    })
-  }
-
-  private[this] def listFiles(p: Path): Seq[Path] = ls ! p filter (_.isFile)
-
-  private[this] def writeDirName(p: Path, depth: Int): Unit = println(s"${"\t" * depth}* ${p.last}")
-
-  private[this] def writeFiles(files: Seq[Path], depth: Int): Unit = {
-    val grouped = files.groupBy(filenameWithoutExtension(_))
-    grouped.foreach(x => println(s"${"\t" * depth}* ${x._1} -> ${x._2.size}"))
-  }
-
-  private[this] def filenameWithoutExtension(p: Path): String = {
-    val splitted = p.last.split("\\.")
-    splitted.take(splitted.length - 1).mkString(".")
-  }
-}
-
 trait MarkdownWriter extends Writer {
 
   val mdFile: Path
