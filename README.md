@@ -1,4 +1,6 @@
 # fstree2md
+[![Build Status](https://travis-ci.org/pbassiner/fstree2md.svg)](https://travis-ci.org/pbassiner/fstree2md)
+
 File System Tree to Markdown
 
 ## Overview
