@@ -1,7 +1,8 @@
 # fstree2md
-[![Build Status](https://travis-ci.org/pbassiner/fstree2md.svg)](https://travis-ci.org/pbassiner/fstree2md)
-
 File System Tree to Markdown
+
+[![Build Status](https://travis-ci.org/pbassiner/fstree2md.svg)](https://travis-ci.org/pbassiner/fstree2md)
+[![codecov.io](http://codecov.io/github/pbassiner/fstree2md/coverage.svg?branch=master)](http://codecov.io/github/pbassiner/fstree2md/branch/master)
 
 ## Overview
 Generate a Markdown file recursively listing the contents of a directory. It groups all files with the same name and generate semantic links according to the file extensions.
