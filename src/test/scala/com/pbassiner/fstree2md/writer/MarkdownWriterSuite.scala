@@ -22,9 +22,13 @@ class MarkdownWriterSuite extends FunSuite with Matchers {
       FsTree(fixtures / 'dir1 / "file1-1.srt", Seq.empty[FsTree])
     )),
     FsTree(fixtures / 'dir2, Seq(
+      FsTree(fixtures / 'dir2 / "file2-1.html", Seq.empty[FsTree]),
+      FsTree(fixtures / 'dir2 / "file2-1.md", Seq.empty[FsTree]),
       FsTree(fixtures / 'dir2 / "file2-1.mp4", Seq.empty[FsTree]),
       FsTree(fixtures / 'dir2 / "file2-1.pdf", Seq.empty[FsTree]),
       FsTree(fixtures / 'dir2 / "file2-1.srt", Seq.empty[FsTree]),
+      FsTree(fixtures / 'dir2 / "file2-1.txt", Seq.empty[FsTree]),
+      FsTree(fixtures / 'dir2 / "file2-1.zip", Seq.empty[FsTree]),
       FsTree(fixtures / 'dir2 / "file2-2.mp4", Seq.empty[FsTree]),
       FsTree(fixtures / 'dir2 / "file2-2.pdf", Seq.empty[FsTree]),
       FsTree(fixtures / 'dir2 / "file2-2.srt", Seq.empty[FsTree])
