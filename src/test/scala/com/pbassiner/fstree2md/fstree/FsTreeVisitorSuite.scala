@@ -42,34 +42,36 @@ class FsTreeVisitorSuite extends FunSuite with Matchers {
     ))
   ))
 
-  val fsTree = FsTree(fixtures, Seq(
-    FsTree(fixtures / "file0.mp4", Seq.empty[FsTree]),
-    FsTree(fixtures / "file0.pdf", Seq.empty[FsTree]),
-    FsTree(fixtures / "file0.srt", Seq.empty[FsTree]),
-    dir1FsTree,
-    dir2FsTree,
-    dir3FsTree
-  ))
-
   test("Build FsTree from Path") {
     new FsTreeVisitorImpl {
+      val expected = FsTree(fixtures, Seq(
+        FsTree(fixtures / "file0.mp4", Seq.empty[FsTree]),
+        FsTree(fixtures / "file0.pdf", Seq.empty[FsTree]),
+        FsTree(fixtures / "file0.srt", Seq.empty[FsTree]),
+        FsTree(fixtures / "filename with spaces.html", Seq.empty[FsTree]),
+        dir1FsTree,
+        dir2FsTree,
+        dir3FsTree
+      ))
+
       val actual = visit(fixtures, Set.empty[String])
 
-      actual shouldEqual (fsTree)
+      actual shouldEqual (expected)
     }
   }
 
   test("Build FsTree from Path with ignored paths") {
     new FsTreeVisitorImpl {
-      val actual = visit(fixtures, Set("dir2"))
-
       val expected = FsTree(fixtures, Seq(
         FsTree(fixtures / "file0.mp4", Seq.empty[FsTree]),
         FsTree(fixtures / "file0.pdf", Seq.empty[FsTree]),
         FsTree(fixtures / "file0.srt", Seq.empty[FsTree]),
+        FsTree(fixtures / "filename with spaces.html", Seq.empty[FsTree]),
         dir1FsTree,
         dir3FsTree
       ))
+
+      val actual = visit(fixtures, Set("dir2"))
 
       actual shouldEqual (expected)
     }

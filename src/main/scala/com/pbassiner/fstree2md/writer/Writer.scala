@@ -61,7 +61,7 @@ trait MarkdownWriter extends Writer {
     buf.toString
   }
 
-  private[this] def buildRef(root: Path, file: Path): Ref = Ref(fileExtension(file), file.relativeTo(root).toString)
+  private[this] def buildRef(root: Path, file: Path): Ref = Ref(fileExtension(file), file.relativeTo(root).toString.replaceAll("\\s", "%20"))
 
   private[this] final case class Ref(fileType: FileType, link: String)
 

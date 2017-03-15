@@ -16,6 +16,7 @@ class MarkdownWriterSuite extends FunSuite with Matchers {
     FsTree(fixtures / "file0.mp4", Seq.empty[FsTree]),
     FsTree(fixtures / "file0.pdf", Seq.empty[FsTree]),
     FsTree(fixtures / "file0.srt", Seq.empty[FsTree]),
+    FsTree(fixtures / "filename with spaces.html", Seq.empty[FsTree]),
     FsTree(fixtures / 'dir1, Seq(
       FsTree(fixtures / 'dir1 / "file1-1.mp4", Seq.empty[FsTree]),
       FsTree(fixtures / 'dir1 / "file1-1.pdf", Seq.empty[FsTree]),

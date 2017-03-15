@@ -1,6 +1,7 @@
 # fstree
 ---
 * file0 ([Slides](file0.pdf), [Video](file0.mp4), [Subtitles](file0.srt))
+* filename with spaces ([Html](filename%20with%20spaces.html))
 * dir1
 	* file1-1 ([Slides](dir1/file1-1.pdf), [Video](dir1/file1-1.mp4), [Subtitles](dir1/file1-1.srt))
 * dir2
